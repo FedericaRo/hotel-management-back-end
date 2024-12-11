@@ -1,0 +1,7 @@
+package com.acc.hotelmanagement.repository;
+
+import com.acc.hotelmanagement.model.Booking;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface BookingRepository extends JpaRepository<Booking, Long> {
+}
