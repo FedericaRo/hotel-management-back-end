@@ -1,18 +1,31 @@
 package com.acc.hotelmanagement.dto;
 
 import com.acc.hotelmanagement.model.RoomType;
-import jakarta.validation.constraints.NotNull;
+import com.acc.hotelmanagement.validation.ValidRoomType;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class RoomDTO {
 
     private Long id;
 
-    @NotNull
+    @NotBlank
+    @ValidRoomType
     private RoomType type;
 
-    @NotNull
-    private int nGuests;
+    @NotBlank
+    @Min(value = 1, message = "The number of guests must be at least 1")
+    private int numberOfGuests;
 
-    @NotNull
+    @NotBlank
+    @Min(value = 0, message = "The price must be at least 0")
     private double price;
+
+    public RoomDTO(){}
+
+
 }

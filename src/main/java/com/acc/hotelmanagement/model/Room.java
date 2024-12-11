@@ -18,19 +18,18 @@ public class Room {
 
     @Enumerated(EnumType.STRING)
     private RoomType type;
-    private int nGuests;
+    private int numberOfGuests;
     private double price;
 
     @OneToMany(mappedBy = "room")
     private List<Booking> bookings;
 
 
-    public Room() {
-    }
+    public Room() {}
 
     public Room(RoomType type, int nGuests, double price) {
         this.type = type;
-        this.nGuests = nGuests;
+        this.numberOfGuests = nGuests;
         this.price = price;
     }
 }

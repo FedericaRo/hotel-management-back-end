@@ -1,20 +1,21 @@
 package com.acc.hotelmanagement.dto;
 
-import com.acc.hotelmanagement.model.ParkingSpace;
-import com.acc.hotelmanagement.model.Room;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalDate;
 
 public class BookingDTO {
 
     private Long id;
 
-    @NotNull
-    private String type;
+    @NotBlank
+    @DateTimeFormat(pattern="dd-MMM-yyyy")
+    private LocalDate checkInDate;
 
-    @NotNull
-    private int nGuests;
+    @NotBlank
+    @DateTimeFormat(pattern="dd-MMM-yyyy")
+    private LocalDate checkOutDate;
 
-    @NotNull
-    private double price;
+
 }
