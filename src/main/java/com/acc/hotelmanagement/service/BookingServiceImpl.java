@@ -69,8 +69,13 @@ public class BookingServiceImpl implements BookingService {
         System.out.println("Booking DTO AFTER SAVING " + savedDTO);
 
         return savedDTO;
-        // return
-        // bookingMapperService.toDTO(bookingRepository.save(bookingMapperService.toEntity(bookingDTO)));
+    }
+
+    @Override
+    public void deleteBooking(Long bookingId) {
+
+        Booking booking = getOneBooking(bookingId);
+        bookingRepository.delete(booking);
     }
 
     private boolean isRoomAvailable(Long roomId, LocalDate checkInDate, LocalDate checkOutDate) {
@@ -97,16 +102,9 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public Booking insert(Booking booking) {
-        return bookingRepository.save(booking);
-    }
-
-    @Override
     public Booking getOneBooking(Long id) {
-        Booking booking = bookingRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Booking with ID " + id + "not found"));
-        return booking;
         return bookingRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Booking with ID " + id + " not found"));
     }
 
     // public BookingDTO createNewBookingWithoutPathVariable(BookingDTO bookingDTO)
