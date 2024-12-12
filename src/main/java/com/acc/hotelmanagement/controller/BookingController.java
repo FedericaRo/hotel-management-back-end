@@ -1,11 +1,13 @@
 package com.acc.hotelmanagement.controller;
 
+import com.acc.hotelmanagement.dto.BookingDTO;
 import com.acc.hotelmanagement.model.Booking;
-import com.acc.hotelmanagement.repository.BookingRepository;
 import com.acc.hotelmanagement.service.BookingService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,8 +23,16 @@ public class BookingController {
 
 
     @GetMapping
-    public List<Booking> getAllBookings()
+    public ResponseEntity<List<BookingDTO>> getAllBookings()
     {
-        return bookingService.getAllBookings();
+        List<BookingDTO> bookingDTOs = bookingService.getAllBookings();
+        return new ResponseEntity<>(bookingDTOs, HttpStatus.OK);
     }
+
+    @PostMapping("/{room_id}")
+    public ResponseEntity<BookingDTO> createNewBooking(@PathVariable long room_id, @Valid @RequestBody BookingDTO bookingDTO)
+    {
+        return new ResponseEntity<>(bookingService.createNewBooking(room_id, bookingDTO), HttpStatus.CREATED);
+    }
+
 }

@@ -5,7 +5,9 @@ import java.util.List;
 import com.acc.hotelmanagement.dto.RoomDTO;
 import com.acc.hotelmanagement.mapper.RoomMapper;
 import com.acc.hotelmanagement.model.Room;
+import org.springframework.stereotype.Service;
 
+@Service
 public class RoomMapperService {
 
     private RoomMapper mapper = RoomMapper.INSTANCE;

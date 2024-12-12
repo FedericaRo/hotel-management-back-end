@@ -3,24 +3,26 @@ package com.acc.hotelmanagement.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.List;
 
 @Entity
-@Table(name = "rooms")
 @Getter
 @Setter
+@Table(name = "rooms")
 public class Room {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Enumerated(EnumType.STRING)
     private RoomType type;
     private int numberOfGuests;
     private double price;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "room")
     private List<Booking> bookings;
 
@@ -32,4 +34,6 @@ public class Room {
         this.numberOfGuests = nGuests;
         this.price = price;
     }
+
+
 }

@@ -3,9 +3,11 @@ package com.acc.hotelmanagement.mapper.service_mapper;
 import com.acc.hotelmanagement.dto.BookingDTO;
 import com.acc.hotelmanagement.mapper.BookingMapper;
 import com.acc.hotelmanagement.model.Booking;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class BookingMapperService {
 
     private BookingMapper mapper = BookingMapper.INSTANCE;

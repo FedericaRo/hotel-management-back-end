@@ -1,21 +1,31 @@
 package com.acc.hotelmanagement.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
+@Getter
+@Setter
+@ToString
 public class BookingDTO {
 
     private Long id;
 
-    @NotBlank
-    @DateTimeFormat(pattern="dd-MMM-yyyy")
+    @NotNull(message = "Check-in date cannot be null")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate checkInDate;
 
-    @NotBlank
-    @DateTimeFormat(pattern="dd-MMM-yyyy")
+    @NotNull(message = "Check-out date cannot be null")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate checkOutDate;
+
+    private Long roomId;
 
 
 }
