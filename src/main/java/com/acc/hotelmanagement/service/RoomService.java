@@ -9,5 +9,5 @@ import java.util.Optional;
 
 public interface RoomService {
     List<RoomDTO> getAllRooms();
-    Optional<RoomDTO> getOneRoom(Long roomId);
+    RoomDTO getOneRoom(Long roomId);
 }

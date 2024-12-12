@@ -27,5 +27,9 @@ public class BookingDTO {
 
     private Long roomId;
 
+    
+    private String parkingCode;
+    private boolean reservedParking;
+
 
 }

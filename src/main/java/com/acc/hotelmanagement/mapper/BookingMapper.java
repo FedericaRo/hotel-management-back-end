@@ -12,9 +12,12 @@ public interface BookingMapper {
     public static final BookingMapper INSTANCE = Mappers.getMapper(BookingMapper.class);
 
     @Mapping(source = "room.id", target = "roomId")
+    @Mapping(source = "parkingSpace.code", target = "parkingCode")
+    @Mapping(source = "parkingSpace.assigned", target = "reservedParking")
     BookingDTO toDTO(Booking booking);
 
     @Mapping(source = "roomId", target = "room.id")
     @Mapping(target = "room", ignore = true)
+    @Mapping(target = "parkingSpace", ignore = true)
     Booking toEntity(BookingDTO bookingDTO);
 }

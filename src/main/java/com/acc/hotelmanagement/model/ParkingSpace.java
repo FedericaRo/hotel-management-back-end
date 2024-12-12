@@ -1,7 +1,10 @@
 package com.acc.hotelmanagement.model;
 
 import jakarta.persistence.*;
-
+import lombok.Getter;
+import lombok.Setter;
+@Getter
+@Setter
 @Entity
 @Table(name = "parking_spaces")
 public class ParkingSpace {
@@ -13,8 +16,20 @@ public class ParkingSpace {
     @Enumerated(EnumType.STRING)
     private ParkingCode code;
 
-    private boolean reserved;
+    private boolean assigned;
 
     @OneToOne(mappedBy = "parkingSpace")
-    Booking booking;
+    private Booking booking;
+
+    @PrePersist
+    public void onCreate()
+    {
+        assigned   = false;
+    }
+
+    public ParkingSpace(){}
+    
+    public ParkingSpace(ParkingCode code){
+        this.code = code;
+    }
 }

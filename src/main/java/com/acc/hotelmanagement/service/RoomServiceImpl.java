@@ -4,6 +4,7 @@ import com.acc.hotelmanagement.dto.RoomDTO;
 import com.acc.hotelmanagement.mapper.service_mapper.RoomMapperService;
 import com.acc.hotelmanagement.model.Room;
 import com.acc.hotelmanagement.repository.RoomRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,9 +32,10 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public Optional<RoomDTO> getOneRoom(Long roomId) {
-        return roomRepository.findById(roomId)
-                .map(roomMapperService::toDTO);
+    public RoomDTO getOneRoom(Long roomId) {
+        Room room = roomRepository.findById(roomId)
+                .orElseThrow(() -> new EntityNotFoundException("Room with ID " + roomId + "not found"));
+        return roomMapperService.toDTO(room);
     }
 
 

@@ -1,6 +1,9 @@
 package com.acc.hotelmanagement.service;
 
-import org.springframework.stereotype.Service;
+import com.acc.hotelmanagement.dto.BookingDTO;
 
 public interface ParkingSpaceService {
+
+    public BookingDTO addParkingSpace(Long bookingId);
+
 }

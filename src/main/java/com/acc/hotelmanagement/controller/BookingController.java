@@ -29,10 +29,10 @@ public class BookingController {
         return new ResponseEntity<>(bookingDTOs, HttpStatus.OK);
     }
 
-    @PostMapping("/{room_id}")
-    public ResponseEntity<BookingDTO> createNewBooking(@PathVariable long room_id, @Valid @RequestBody BookingDTO bookingDTO)
+    @PostMapping("/{roomId}")
+    public ResponseEntity<BookingDTO> createNewBooking(@PathVariable long roomId, @Valid @RequestBody BookingDTO bookingDTO)
     {
-        return new ResponseEntity<>(bookingService.createNewBooking(room_id, bookingDTO), HttpStatus.CREATED);
+        return new ResponseEntity<>(bookingService.createNewBooking(roomId, bookingDTO), HttpStatus.CREATED);
     }
 
 }
