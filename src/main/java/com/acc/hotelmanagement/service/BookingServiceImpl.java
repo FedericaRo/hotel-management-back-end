@@ -7,6 +7,7 @@ import com.acc.hotelmanagement.exception.RoomNotAvailableException;
 import com.acc.hotelmanagement.mapper.service_mapper.BookingMapperService;
 import com.acc.hotelmanagement.mapper.service_mapper.RoomMapperService;
 import com.acc.hotelmanagement.model.Booking;
+import com.acc.hotelmanagement.model.ParkingSpace;
 import com.acc.hotelmanagement.repository.BookingRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
@@ -15,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -37,18 +37,17 @@ public class BookingServiceImpl implements BookingService {
     }
 
 
-
     @Override
     public BookingDTO createNewBooking(Long roomId, BookingDTO bookingDTO) {
 
         RoomDTO roomDTO = roomService.getOneRoom(roomId);
 
-        // Add a check to see if the room is available in those dates
-        // 1. create a SQL QUERY directly comparing the dates in some ways
-        // 2. get all the bookings for that room, use a lambda on
-        // 3. Creating the query directly with the dates, if the query gets back
-        // something then the booking already exist in those dates, otherwise free to
-        // book
+        /* Add a check to see if the room is available in those dates
+        1. create a SQL QUERY directly comparing the dates in some ways
+        2. get all the bookings for that room, use a lambda on
+        3. Creating the query directly with the dates, if the query gets back
+        something then the booking already exist in those dates, otherwise free to
+        book */
         System.out.println("roomDTO!! " + roomDTO);
 
         areDatesValid(bookingDTO.getCheckInDate(), bookingDTO.getCheckOutDate());
@@ -56,7 +55,7 @@ public class BookingServiceImpl implements BookingService {
         boolean available = isRoomAvailable(roomId, bookingDTO.getCheckInDate(), bookingDTO.getCheckOutDate());
 
         if (!available)
-            throw new RoomNotAvailableException("ROOM NOT AVAILABLE FOR DATES");
+            throw new RoomNotAvailableException("The room is not available for the dates " + bookingDTO.getCheckInDate() + ", " + bookingDTO.getCheckOutDate());
 
         Booking booking = bookingMapperService.toEntity(bookingDTO);
         System.out.println("Booking entity from before adding Room " + booking);
@@ -75,6 +74,11 @@ public class BookingServiceImpl implements BookingService {
     public void deleteBooking(Long bookingId) {
 
         Booking booking = getOneBooking(bookingId);
+
+        // Free the parking space if the booking had one assigned
+        ParkingSpace parkingSpace = booking.getParkingSpace();
+        if (parkingSpace != null)
+            parkingSpace.setAssigned(false);
         bookingRepository.delete(booking);
     }
 

@@ -27,7 +27,7 @@ public class ParkingSpaceServiceImpl implements ParkingSpaceService {
 
         if (booking.getParkingSpace() != null)
             throw new RuntimeException("This booking already has a parking space assigned");
-        // ! Change to a more specific exception
+        // TODO Change to a more specific exception
 
         ParkingSpace parkingSpace = findAvailableParkingSpace();
 
@@ -69,7 +69,7 @@ public class ParkingSpaceServiceImpl implements ParkingSpaceService {
         ParkingSpace parkingSpace = booking.getParkingSpace();
         if (parkingSpace == null)
             throw new RuntimeException("This booking does not have a reserved parking spot");
-        // ! Change to a more specific exception
+        // TODO Change to a more specific exception
 
         booking.setParkingSpace(parkingSpace);
         parkingSpace.setAssigned(false);
