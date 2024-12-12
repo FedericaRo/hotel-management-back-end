@@ -4,6 +4,7 @@ import com.acc.hotelmanagement.dto.BookingDTO;
 
 public interface ParkingSpaceService {
 
-    public BookingDTO addParkingSpace(Long bookingId);
+    public BookingDTO reserveParkingSpace(Long bookingId);
+    public BookingDTO removeParkingSpace(Long bookingId);
 
 }

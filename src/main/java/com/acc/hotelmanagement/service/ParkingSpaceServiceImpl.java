@@ -20,8 +20,9 @@ public class ParkingSpaceServiceImpl implements ParkingSpaceService {
     private final ParkingSpaceRepository parkingSpaceRepository;
 
     @Override
-    public BookingDTO addParkingSpace(Long bookingId) {
+    public BookingDTO reserveParkingSpace(Long bookingId) {
 
+        // 
         Booking booking = bookingService.getOneBooking(bookingId);
 
         if (booking.getParkingSpace() != null)
@@ -59,6 +60,23 @@ public class ParkingSpaceServiceImpl implements ParkingSpaceService {
 
     //     return availableParkingSpace.getFirst();
     // }
+
+
+    @Override
+    public BookingDTO removeParkingSpace(Long bookingId) {
+
+        Booking booking = bookingService.getOneBooking(bookingId);
+        ParkingSpace parkingSpace = booking.getParkingSpace();
+        if (parkingSpace == null)
+            throw new RuntimeException("This booking does not have a reserved parking spot");
+        // ! Change to a more specific exception
+
+        booking.setParkingSpace(parkingSpace);
+        parkingSpace.setAssigned(false);
+
+        return bookingMapperService.toDTO(booking);
+
+    }
 
     
     

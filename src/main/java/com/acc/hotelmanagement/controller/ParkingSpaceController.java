@@ -21,7 +21,12 @@ public class ParkingSpaceController {
     @PutMapping("reserveParking/{bookingId}")
     public BookingDTO addParkingSpace(@PathVariable Long bookingId) {
         
-        return parkingSpaceService.addParkingSpace(bookingId);
+        return parkingSpaceService.reserveParkingSpace(bookingId);
+    }
+
+    @PutMapping("removeParking/{bookingId}")
+    public BookingDTO removeParkingSpace(@PathVariable Long bookingId) {
+        return parkingSpaceService.reserveParkingSpace(bookingId);
     }
 
 }

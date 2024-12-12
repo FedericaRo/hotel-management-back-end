@@ -36,13 +36,7 @@ public class BookingServiceImpl implements BookingService {
 
     }
 
-    @Override
-    public BookingDTO getOneBookingDTO(Long id) {
-        Booking booking = bookingRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Booking with ID " + id + "not found"));
-        return bookingMapperService.toDTO(booking);
 
-    }
 
     @Override
     public BookingDTO createNewBooking(Long roomId, BookingDTO bookingDTO) {
@@ -112,6 +106,7 @@ public class BookingServiceImpl implements BookingService {
         Booking booking = bookingRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Booking with ID " + id + "not found"));
         return booking;
+        return bookingRepository.findById(id)
     }
 
     // public BookingDTO createNewBookingWithoutPathVariable(BookingDTO bookingDTO)
