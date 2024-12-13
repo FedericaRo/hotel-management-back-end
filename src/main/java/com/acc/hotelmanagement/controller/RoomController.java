@@ -2,12 +2,10 @@ package com.acc.hotelmanagement.controller;
 
 import com.acc.hotelmanagement.dto.RoomDTO;
 import com.acc.hotelmanagement.service.RoomService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,6 +29,12 @@ public class RoomController {
     public ResponseEntity<RoomDTO> getRoom(@PathVariable long roomId) {
         RoomDTO roomDTOs = roomService.getRoomDTO(roomId);
         return new ResponseEntity<>(roomDTOs, HttpStatus.OK);
+    }
+
+    @PostMapping()
+    public ResponseEntity<RoomDTO> addRoom(@Valid @RequestBody RoomDTO roomDTO) {
+        RoomDTO roomDTOs = roomService.createRoom(roomDTO);
+        return new ResponseEntity<>(roomDTOs, HttpStatus.CREATED);
     }
 
 

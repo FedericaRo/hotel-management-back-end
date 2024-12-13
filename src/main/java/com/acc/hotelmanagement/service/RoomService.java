@@ -12,4 +12,6 @@ public interface RoomService {
     RoomDTO getRoomDTO(Long roomId);
 
     Room getRoom(Long roomId);
+
+    RoomDTO createRoom(RoomDTO roomDTO);
 }

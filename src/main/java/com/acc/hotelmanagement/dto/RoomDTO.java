@@ -1,9 +1,8 @@
 package com.acc.hotelmanagement.dto;
 
-import com.acc.hotelmanagement.model.RoomType;
 import com.acc.hotelmanagement.validation.ValidRoomType;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -15,15 +14,15 @@ public class RoomDTO {
 
     private Long id;
 
-    @NotBlank
+    @NotNull(message = "Room type cannot be null")
     @ValidRoomType
-    private RoomType type;
+    private String type;
 
-    @NotBlank
+    @NotNull(message = "Number of guests field cannot be null")
     @Min(value = 1, message = "The number of guests must be at least 1")
     private int numberOfGuests;
 
-    @NotBlank
+    @NotNull(message = "Price field cannot be null")
     @Min(value = 0, message = "The price must be at least 0")
     private double price;
 

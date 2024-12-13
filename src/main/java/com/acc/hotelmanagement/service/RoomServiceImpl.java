@@ -40,5 +40,11 @@ public class RoomServiceImpl implements RoomService {
                 .orElseThrow(() -> new EntityNotFoundException("Room with ID " + roomId + " not found"));
     }
 
+    @Override
+    public RoomDTO createRoom(RoomDTO roomDTO) {
+        Room newRoom = roomMapperService.toEntity(roomDTO);
+        return roomMapperService.toDTO(roomRepository.save(newRoom));
+    }
+
 
 }
