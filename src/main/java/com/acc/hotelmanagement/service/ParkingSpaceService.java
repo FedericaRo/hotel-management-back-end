@@ -1,10 +1,11 @@
 package com.acc.hotelmanagement.service;
 
-import com.acc.hotelmanagement.dto.BookingDTO;
+import com.acc.hotelmanagement.model.ParkingSpace;
 
 public interface ParkingSpaceService {
 
-    public BookingDTO reserveParkingSpace(Long bookingId);
-    public BookingDTO removeParkingSpace(Long bookingId);
+    public ParkingSpace reserveParkingSpace();
+
+    public void removeParkingSpace(Long parkingSpaceId);
 
 }

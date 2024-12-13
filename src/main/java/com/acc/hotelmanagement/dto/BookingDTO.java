@@ -1,12 +1,10 @@
 package com.acc.hotelmanagement.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -27,9 +25,7 @@ public class BookingDTO {
 
     private Long roomId;
 
-    
     private String parkingCode;
     private boolean reservedParking;
-
 
 }

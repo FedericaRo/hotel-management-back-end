@@ -1,14 +1,11 @@
 package com.acc.hotelmanagement.controller;
 
-import com.acc.hotelmanagement.dto.BookingDTO;
 import com.acc.hotelmanagement.dto.RoomDTO;
-import com.acc.hotelmanagement.model.Room;
 import com.acc.hotelmanagement.service.RoomService;
-import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,12 +22,16 @@ public class RoomController {
     }
 
     @GetMapping
-    public ResponseEntity<List<RoomDTO>> getAllRooms()
-    {
+    public ResponseEntity<List<RoomDTO>> getAllRooms() {
         List<RoomDTO> roomDTOs = roomService.getAllRooms();
         return new ResponseEntity<>(roomDTOs, HttpStatus.OK);
     }
 
+    @GetMapping("/{roomId}")
+    public ResponseEntity<RoomDTO> getRoom(@PathVariable long roomId) {
+        RoomDTO roomDTOs = roomService.getRoomDTO(roomId);
+        return new ResponseEntity<>(roomDTOs, HttpStatus.OK);
+    }
 
 
 }

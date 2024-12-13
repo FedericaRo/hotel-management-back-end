@@ -3,6 +3,7 @@ package com.acc.hotelmanagement.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
 @Getter
 @Setter
 @Entity
@@ -22,14 +23,14 @@ public class ParkingSpace {
     private Booking booking;
 
     @PrePersist
-    public void onCreate()
-    {
-        assigned   = false;
+    public void onCreate() {
+        assigned = false;
     }
 
-    public ParkingSpace(){}
-    
-    public ParkingSpace(ParkingCode code){
+    public ParkingSpace() {
+    }
+
+    public ParkingSpace(ParkingCode code) {
         this.code = code;
     }
 }

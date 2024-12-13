@@ -1,13 +1,12 @@
 package com.acc.hotelmanagement.service;
 
 import com.acc.hotelmanagement.dto.BookingDTO;
-import com.acc.hotelmanagement.dto.RoomDTO;
 import com.acc.hotelmanagement.exception.InvalidBookingDateException;
 import com.acc.hotelmanagement.exception.RoomNotAvailableException;
 import com.acc.hotelmanagement.mapper.service_mapper.BookingMapperService;
 import com.acc.hotelmanagement.mapper.service_mapper.RoomMapperService;
 import com.acc.hotelmanagement.model.Booking;
-import com.acc.hotelmanagement.model.ParkingSpace;
+import com.acc.hotelmanagement.model.Room;
 import com.acc.hotelmanagement.repository.BookingRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
@@ -28,62 +27,36 @@ public class BookingServiceImpl implements BookingService {
     private final RoomMapperService roomMapperService;
 
     @Override
-    public List<BookingDTO> getAllBookings() {
+    public List<Booking> getAllBookings() {
         System.out.println("Getting all bookings...");
-        System.out.println(bookingRepository.findAll());
-        List<Booking> bookings = bookingRepository.findAll();
-        return bookingMapperService.toDTO(bookings);
-
+        return bookingRepository.findAll();
     }
 
-
     @Override
-    public BookingDTO createNewBooking(Long roomId, BookingDTO bookingDTO) {
-
-        RoomDTO roomDTO = roomService.getOneRoom(roomId);
-
-        /* Add a check to see if the room is available in those dates
-        1. create a SQL QUERY directly comparing the dates in some ways
-        2. get all the bookings for that room, use a lambda on
-        3. Creating the query directly with the dates, if the query gets back
-        something then the booking already exist in those dates, otherwise free to
-        book */
-        System.out.println("roomDTO!! " + roomDTO);
+    public Booking createBooking(Room room, BookingDTO bookingDTO) {
 
         areDatesValid(bookingDTO.getCheckInDate(), bookingDTO.getCheckOutDate());
 
-        boolean available = isRoomAvailable(roomId, bookingDTO.getCheckInDate(), bookingDTO.getCheckOutDate());
-
-        if (!available)
+        if (!isRoomAvailable(room.getId(), bookingDTO.getCheckInDate(), bookingDTO.getCheckOutDate()))
             throw new RoomNotAvailableException("The room is not available for the dates " + bookingDTO.getCheckInDate() + ", " + bookingDTO.getCheckOutDate());
 
         Booking booking = bookingMapperService.toEntity(bookingDTO);
         System.out.println("Booking entity from before adding Room " + booking);
-        booking.setRoom(roomMapperService.toEntity(roomDTO));
+        booking.setRoom(room);
 
         System.out.println("Booking entity from DTO after adding Room " + booking);
         Booking savedBooking = bookingRepository.save(booking);
         System.out.println("Booking entity AFTER SAVING " + savedBooking);
-        BookingDTO savedDTO = bookingMapperService.toDTO(savedBooking);
-        System.out.println("Booking DTO AFTER SAVING " + savedDTO);
 
-        return savedDTO;
+        return savedBooking;
     }
 
     @Override
-    public void deleteBooking(Long bookingId) {
-
-        Booking booking = getOneBooking(bookingId);
-
-        // Free the parking space if the booking had one assigned
-        ParkingSpace parkingSpace = booking.getParkingSpace();
-        if (parkingSpace != null)
-            parkingSpace.setAssigned(false);
+    public void deleteBooking(Booking booking) {
         bookingRepository.delete(booking);
     }
 
     private boolean isRoomAvailable(Long roomId, LocalDate checkInDate, LocalDate checkOutDate) {
-
         return bookingRepository.findOverlappingBookings(roomId, checkInDate, checkOutDate).isEmpty();
     }
 
@@ -100,31 +73,13 @@ public class BookingServiceImpl implements BookingService {
     }
 
     private boolean isCheckOutLaterThanCheckIn(LocalDate checkInDate, LocalDate checkOutDate) {
-        System.out.println(checkInDate);
-        System.out.println(checkOutDate);
         return checkInDate.isBefore(checkOutDate);
     }
 
     @Override
-    public Booking getOneBooking(Long id) {
+    public Booking getBooking(Long id) {
         return bookingRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Booking with ID " + id + " not found"));
     }
-
-    // public BookingDTO createNewBookingWithoutPathVariable(BookingDTO bookingDTO)
-    // {
-    //
-    // Room room = roomRepository.findById(bookingDTO.getRoomId())
-    // .orElseThrow(() -> new EntityNotFoundException("Room with ID " +
-    // bookingDTO.getRoomId() + "not found" ));
-    //
-    // Booking booking = bookingMapperService.toEntity(bookingDTO);
-    // booking.setRoom(room);
-    //
-    // Booking savedBooking = bookingRepository.save(booking);
-    // BookingDTO savedDTO = bookingMapperService.toDTO(savedBooking);
-    //
-    // return savedDTO;
-    // }
 
 }

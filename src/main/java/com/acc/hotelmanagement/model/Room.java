@@ -27,7 +27,8 @@ public class Room {
     private List<Booking> bookings;
 
 
-    public Room() {}
+    public Room() {
+    }
 
     public Room(RoomType type, int nGuests, double price) {
         this.type = type;

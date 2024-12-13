@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -26,16 +25,19 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public List<RoomDTO> getAllRooms() {
         System.out.println("Getting all rooms...");
-        System.out.println(roomRepository.findAll());
         List<Room> rooms = roomRepository.findAll();
         return roomMapperService.toDTO(rooms);
     }
 
     @Override
-    public RoomDTO getOneRoom(Long roomId) {
-        Room room = roomRepository.findById(roomId)
-                .orElseThrow(() -> new EntityNotFoundException("Room with ID " + roomId + "not found"));
-        return roomMapperService.toDTO(room);
+    public RoomDTO getRoomDTO(Long roomId) {
+        return roomMapperService.toDTO(this.getRoom(roomId));
+    }
+
+    @Override
+    public Room getRoom(Long roomId) {
+        return roomRepository.findById(roomId)
+                .orElseThrow(() -> new EntityNotFoundException("Room with ID " + roomId + " not found"));
     }
 
 

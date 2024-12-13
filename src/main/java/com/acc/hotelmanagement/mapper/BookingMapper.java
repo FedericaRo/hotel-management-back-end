@@ -1,4 +1,5 @@
 package com.acc.hotelmanagement.mapper;
+
 import com.acc.hotelmanagement.dto.BookingDTO;
 import com.acc.hotelmanagement.model.Booking;
 import org.mapstruct.Mapper;

@@ -1,14 +1,12 @@
 package com.acc.hotelmanagement.controller;
 
+import com.acc.hotelmanagement.dto.BookingDTO;
+import com.acc.hotelmanagement.service.BookingHandlerService;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.acc.hotelmanagement.dto.BookingDTO;
-import com.acc.hotelmanagement.service.ParkingSpaceService;
-
-import lombok.AllArgsConstructor;
 
 
 @RestController
@@ -16,17 +14,16 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class ParkingSpaceController {
 
-    private final ParkingSpaceService parkingSpaceService;
+    private final BookingHandlerService bookingHandlerService;
 
     @PutMapping("reserveParking/{bookingId}")
     public BookingDTO addParkingSpace(@PathVariable Long bookingId) {
-        
-        return parkingSpaceService.reserveParkingSpace(bookingId);
+        return bookingHandlerService.assignParkingSpaceToExistingBooking(bookingId);
     }
 
     @PutMapping("removeParking/{bookingId}")
     public BookingDTO removeParkingSpace(@PathVariable Long bookingId) {
-        return parkingSpaceService.reserveParkingSpace(bookingId);
+        return bookingHandlerService.removeParkingSpaceToExistingBooking(bookingId);
     }
 
 }

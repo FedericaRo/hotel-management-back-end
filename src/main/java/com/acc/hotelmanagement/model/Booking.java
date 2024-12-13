@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+
 @Getter
 @Setter
 @Entity
@@ -18,16 +19,13 @@ public class Booking {
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
 
-//  private int nGuests;
     @ManyToOne
-    @JoinColumn(name="room_id", nullable = false)
+    @JoinColumn(name = "room_id", nullable = false)
     private Room room;
 
     @OneToOne
     @JoinColumn(name = "parking_space_id")
     private ParkingSpace parkingSpace;
-
-    
 
     @Override
     public String toString() {
@@ -35,7 +33,7 @@ public class Booking {
                 "id=" + (id != null ? id : "null") +
                 ", checkInDate=" + checkInDate +
                 ", checkOutDate=" + checkOutDate +
-                ", roomId=" + (room.getId() != null ? room.getId()  : "null") +
+                ", roomId=" + (room.getId() != null ? room.getId() : "null") +
                 '}';
     }
 }
