@@ -1,6 +1,6 @@
 package com.acc.hotelmanagement.service;
 
-import com.acc.hotelmanagement.mapper.service_mapper.BookingMapperService;
+import com.acc.hotelmanagement.exception.ParkingSpaceException;
 import com.acc.hotelmanagement.model.ParkingSpace;
 import com.acc.hotelmanagement.repository.ParkingSpaceRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -14,10 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 @AllArgsConstructor
 public class ParkingSpaceServiceImpl implements ParkingSpaceService {
 
-    private final BookingService bookingService;
-    private final BookingMapperService bookingMapperService;
     private final ParkingSpaceRepository parkingSpaceRepository;
 
+    // Reserve a parking space
     @Override
     public ParkingSpace reserveParkingSpace() {
 
@@ -26,6 +25,7 @@ public class ParkingSpaceServiceImpl implements ParkingSpaceService {
         return parkingSpace;
     }
 
+    // Set a parking space as not assigned
     @Override
     public void removeParkingSpace(Long parkingSpaceId) {
 
@@ -40,7 +40,7 @@ public class ParkingSpaceServiceImpl implements ParkingSpaceService {
         return parkingSpaceRepository.findByAssignedFalse()
                 .stream()
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException("No available parking spaces."));
+                .orElseThrow(() -> new ParkingSpaceException("No available parking spaces"));
     }
 
 }

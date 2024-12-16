@@ -7,10 +7,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Service class that provides methods to map between Room entities and RoomDTOs.
+ */
 @Service
 public class RoomMapperService {
 
-    private RoomMapper mapper = RoomMapper.INSTANCE;
+    private final RoomMapper mapper = RoomMapper.INSTANCE;
 
     public Room toEntity(RoomDTO dto) {
         return mapper.toEntity(dto);
@@ -18,7 +21,7 @@ public class RoomMapperService {
 
     public List<Room> toEntity(List<RoomDTO> dtos) {
         return dtos.stream()
-                .map(dto -> mapper.toEntity(dto))
+                .map(mapper::toEntity)
                 .toList();
     }
 
@@ -28,7 +31,7 @@ public class RoomMapperService {
 
     public List<RoomDTO> toDTO(List<Room> entities) {
         return entities.stream()
-                .map(entity -> mapper.toDTO(entity))
+                .map(mapper::toDTO)
                 .toList();
     }
 }

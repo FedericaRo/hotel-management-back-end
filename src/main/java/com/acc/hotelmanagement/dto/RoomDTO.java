@@ -20,11 +20,11 @@ public class RoomDTO {
 
     @NotNull(message = "Number of guests field cannot be null")
     @Min(value = 1, message = "The number of guests must be at least 1")
-    private int numberOfGuests;
+    private Integer numberOfGuests;
 
     @NotNull(message = "Price field cannot be null")
     @Min(value = 0, message = "The price must be at least 0")
-    private double price;
+    private Double price;
 
     public RoomDTO(){}
 

@@ -6,13 +6,16 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-
+/**
+ * Maps between Booking entities and BookingDTOs
+ */
 @Mapper(componentModel = "spring")
 public interface BookingMapper {
 
-    public static final BookingMapper INSTANCE = Mappers.getMapper(BookingMapper.class);
+    BookingMapper INSTANCE = Mappers.getMapper(BookingMapper.class);
 
     @Mapping(source = "room.id", target = "roomId")
+    @Mapping(source = "room.type", target = "roomType")
     @Mapping(source = "parkingSpace.code", target = "parkingCode")
     @Mapping(source = "parkingSpace.assigned", target = "reservedParking")
     BookingDTO toDTO(Booking booking);

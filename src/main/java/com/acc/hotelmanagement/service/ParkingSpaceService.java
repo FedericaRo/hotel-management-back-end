@@ -4,8 +4,8 @@ import com.acc.hotelmanagement.model.ParkingSpace;
 
 public interface ParkingSpaceService {
 
-    public ParkingSpace reserveParkingSpace();
+    ParkingSpace reserveParkingSpace();
 
-    public void removeParkingSpace(Long parkingSpaceId);
+    void removeParkingSpace(Long parkingSpaceId);
 
 }

@@ -1,5 +1,6 @@
 package com.acc.hotelmanagement.dto;
 
+import com.acc.hotelmanagement.validation.ValidRoomType;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -22,6 +23,12 @@ public class BookingDTO {
     @NotNull(message = "Check-out date cannot be null")
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate checkOutDate;
+
+    @NotNull(message = "Insert the number of guests")
+    private Integer numberOfGuests;
+
+    @ValidRoomType
+    private String roomType;
 
     private Long roomId;
 

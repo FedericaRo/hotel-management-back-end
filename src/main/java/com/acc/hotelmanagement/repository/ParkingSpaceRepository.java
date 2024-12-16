@@ -7,6 +7,11 @@ import java.util.List;
 
 public interface ParkingSpaceRepository extends JpaRepository<ParkingSpace, Long> {
 
+    /**
+     * Finds a list of available parking spaces, if present.
+     *
+     * @return a list of parking spaces
+     */
     List<ParkingSpace> findByAssignedFalse();
 
     // * LIMIT is not a feature of JPQL

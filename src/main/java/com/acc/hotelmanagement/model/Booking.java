@@ -19,6 +19,8 @@ public class Booking {
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
 
+    private Integer numberOfGuests;
+
     @ManyToOne
     @JoinColumn(name = "room_id", nullable = false)
     private Room room;

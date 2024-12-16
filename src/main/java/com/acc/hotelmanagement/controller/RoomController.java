@@ -19,22 +19,40 @@ public class RoomController {
         this.roomService = roomService;
     }
 
+    /**
+     * Retrieves all rooms
+     *
+     * @return ResponseEntity containing a list of RoomDTOs with HTTP status OK.
+     */
     @GetMapping
     public ResponseEntity<List<RoomDTO>> getAllRooms() {
         List<RoomDTO> roomDTOs = roomService.getAllRooms();
         return new ResponseEntity<>(roomDTOs, HttpStatus.OK);
     }
 
+    /**
+     * Retrieves room details for the specified room ID.
+     *
+     * @param roomId The ID of the room to retrieve.
+     * @return ResponseEntity containing the RoomDTO for the specified ID with HTTP status OK.
+     */
     @GetMapping("/{roomId}")
     public ResponseEntity<RoomDTO> getRoom(@PathVariable long roomId) {
         RoomDTO roomDTOs = roomService.getRoomDTO(roomId);
         return new ResponseEntity<>(roomDTOs, HttpStatus.OK);
     }
 
-    @PostMapping()
+
+    /**
+     * Adds a new room.
+     *
+     * @param roomDTO The RoomDTO object containing details of the room to be added.
+     * @return ResponseEntity containing the added RoomDTO with HTTP status CREATED.
+     */
+    @PostMapping
     public ResponseEntity<RoomDTO> addRoom(@Valid @RequestBody RoomDTO roomDTO) {
-        RoomDTO roomDTOs = roomService.createRoom(roomDTO);
-        return new ResponseEntity<>(roomDTOs, HttpStatus.CREATED);
+        RoomDTO createdRoom = roomService.createRoom(roomDTO);
+        return new ResponseEntity<>(createdRoom, HttpStatus.CREATED);
     }
 
 

@@ -22,6 +22,7 @@ public class RoomServiceImpl implements RoomService {
         this.roomMapperService = roomMapperService;
     }
 
+    // Retrieves all rooms and maps them to RoomDTO
     @Override
     public List<RoomDTO> getAllRooms() {
         System.out.println("Getting all rooms...");
@@ -29,22 +30,31 @@ public class RoomServiceImpl implements RoomService {
         return roomMapperService.toDTO(rooms);
     }
 
+    // Retrieves a room DTO by its ID
     @Override
     public RoomDTO getRoomDTO(Long roomId) {
-        return roomMapperService.toDTO(this.getRoom(roomId));
+        return roomMapperService.toDTO(this.getRoomById(roomId));
     }
-
+    // Retrieves a room entity by its ID
     @Override
-    public Room getRoom(Long roomId) {
+    public Room getRoomById(Long roomId) {
         return roomRepository.findById(roomId)
                 .orElseThrow(() -> new EntityNotFoundException("Room with ID " + roomId + " not found"));
     }
 
+
+    //Creates a new room
     @Override
     public RoomDTO createRoom(RoomDTO roomDTO) {
         Room newRoom = roomMapperService.toEntity(roomDTO);
         return roomMapperService.toDTO(roomRepository.save(newRoom));
     }
+
+    /*@Override
+    public Room getRoomByNumberGuests(Integer numberOfGuests) {
+        return roomRepository.findByNumberOfGuests(numberOfGuests).stream().findFirst()
+                            .orElseThrow(() -> new EntityNotFoundException("There are no room available for " + numberOfGuests+ " guests" ));
+    }*/
 
 
 }

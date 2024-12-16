@@ -29,6 +29,17 @@ public class ExceptionHandlerController {
         return e.getMessage();
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    public String illegalArgumentException(IllegalArgumentException e) {
+        return e.getMessage();
+    }
+
+    @ExceptionHandler(ParkingSpaceException.class)
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    public String noAvailableParkingSpaceException(ParkingSpaceException e) {
+        return e.getMessage();
+    }
 //    @ExceptionHandler(MethodArgumentNotValidException.class)
 //    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
 //    public String MethodArgumentNotValidException(MethodArgumentNotValidException e) {
@@ -36,15 +47,26 @@ public class ExceptionHandlerController {
 //
 //    }
 
+    /**
+     * Handles validation errors from input DTOs with annotation validation. (ex. @NotNull, @Min, etc.)
+     * Returns the specific field error message if available, otherwise returns a fallback message.
+     *
+     * @param e the exception thrown when method argument validation fails
+     * @return the error message
+     */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     public String methodArgumentNotValidException(MethodArgumentNotValidException e) {
+        // Retrieve the first field error from the binding result
         FieldError fieldError = e.getBindingResult().getFieldError();
-        if (fieldError != null && fieldError.getDefaultMessage() != null) {
-            return fieldError.getDefaultMessage();
-        }
+
+        if (fieldError != null && fieldError.getDefaultMessage() != null)
+            return fieldError.getDefaultMessage(); // Return the specific field error message
+
+        // Return the exception's message as a fallback
         return e.getMessage();
     }
+
 
 
 }
