@@ -165,8 +165,8 @@ I mapper trasformano oggetti da DTO a entità e viceversa.
 
 #### Eccezioni personalizzate
 
-- **`InvalidBookingDateException`****:** Gestisce errori relativi a date di prenotazione non valide.
-- **`RoomNotAvailableException`****:** Segnala l'indisponibilità di una camera.
-- **`ParkingSpaceException`****:** Segnala la mancanza di parcheggi disponibilio altri problemi relativi ai posti auto
+- **`InvalidBookingDateException`**: Gestisce errori relativi a date di prenotazione non valide.
+- **`RoomNotAvailableException`**: Segnala l'indisponibilità di una camera.
+- **`ParkingSpaceException`**: Segnala la mancanza di parcheggi disponibilio altri problemi relativi ai posti auto
 
 ---
