@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidRoomType {
 
-    String message() default "Invalid room type.";
+    String message() default "Invalid room type";
 
     Class<?>[] groups() default {};
 

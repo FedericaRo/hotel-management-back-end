@@ -1,12 +1,11 @@
 package com.acc.hotelmanagement.dto;
 
+import com.acc.hotelmanagement.validation.ValidRoomType;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -25,11 +24,15 @@ public class BookingDTO {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate checkOutDate;
 
+    @NotNull(message = "Insert the number of guests")
+    private Integer numberOfGuests;
+
+    @ValidRoomType
+    private String roomType;
+
     private Long roomId;
 
-    
     private String parkingCode;
     private boolean reservedParking;
-
 
 }

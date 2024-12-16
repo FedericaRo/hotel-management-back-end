@@ -7,32 +7,31 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Service class that provides methods to map between Booking entities and BookingDTOs.
+ */
 @Service
 public class BookingMapperService {
 
-    private BookingMapper mapper = BookingMapper.INSTANCE;
+    private final BookingMapper mapper = BookingMapper.INSTANCE;
 
-    public Booking toEntity(BookingDTO dto)
-    {
+    public Booking toEntity(BookingDTO dto) {
         return mapper.toEntity(dto);
     }
 
-    public List<Booking> toEntity(List<BookingDTO> dtos)
-    {
+    public List<Booking> toEntity(List<BookingDTO> dtos) {
         return dtos.stream()
-                .map(dto -> mapper.toEntity(dto))
+                .map(mapper::toEntity)
                 .toList();
     }
 
-    public BookingDTO toDTO(Booking entity)
-    {
+    public BookingDTO toDTO(Booking entity) {
         return mapper.toDTO(entity);
     }
 
-    public List<BookingDTO> toDTO(List<Booking> entities)
-    {
+    public List<BookingDTO> toDTO(List<Booking> entities) {
         return entities.stream()
-                .map(entity -> mapper.toDTO(entity))
+                .map(mapper::toDTO)
                 .toList();
     }
 }

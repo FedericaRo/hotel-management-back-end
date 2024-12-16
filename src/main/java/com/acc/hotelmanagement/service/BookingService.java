@@ -1,17 +1,18 @@
 package com.acc.hotelmanagement.service;
 
-import java.util.List;
-
 import com.acc.hotelmanagement.dto.BookingDTO;
 import com.acc.hotelmanagement.model.Booking;
+import com.acc.hotelmanagement.model.Room;
+
+import java.util.List;
 
 public interface BookingService {
 
-    public List<BookingDTO> getAllBookings();
-    // public Optional<BookingDTO> getOneBooking(Long id);
-    // public BookingDTO getOneBookingDTO(Long id);
-    public Booking getOneBooking(Long id);
-    public BookingDTO createNewBooking(Long roomId, BookingDTO bookingDTO);
-    // public Booking insert(Booking booking);
-    public void deleteBooking(Long roomId);
+    List<Booking> getAllBookings();
+
+    Booking getBooking(Long id);
+
+    Booking createBooking(Room room, BookingDTO bookingDTO);
+
+    void deleteBooking(Booking booking);
 }

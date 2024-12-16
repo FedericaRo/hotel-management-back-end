@@ -1,16 +1,11 @@
 package com.acc.hotelmanagement.controller;
 
-import com.acc.hotelmanagement.dto.BookingDTO;
 import com.acc.hotelmanagement.dto.RoomDTO;
-import com.acc.hotelmanagement.model.Room;
 import com.acc.hotelmanagement.service.RoomService;
-import lombok.AllArgsConstructor;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,13 +19,41 @@ public class RoomController {
         this.roomService = roomService;
     }
 
+    /**
+     * Retrieves all rooms
+     *
+     * @return ResponseEntity containing a list of RoomDTOs with HTTP status OK.
+     */
     @GetMapping
-    public ResponseEntity<List<RoomDTO>> getAllRooms()
-    {
+    public ResponseEntity<List<RoomDTO>> getAllRooms() {
         List<RoomDTO> roomDTOs = roomService.getAllRooms();
         return new ResponseEntity<>(roomDTOs, HttpStatus.OK);
     }
 
+    /**
+     * Retrieves room details for the specified room ID.
+     *
+     * @param roomId The ID of the room to retrieve.
+     * @return ResponseEntity containing the RoomDTO for the specified ID with HTTP status OK.
+     */
+    @GetMapping("/{roomId}")
+    public ResponseEntity<RoomDTO> getRoom(@PathVariable long roomId) {
+        RoomDTO roomDTOs = roomService.getRoomDTO(roomId);
+        return new ResponseEntity<>(roomDTOs, HttpStatus.OK);
+    }
+
+
+    /**
+     * Adds a new room.
+     *
+     * @param roomDTO The RoomDTO object containing details of the room to be added.
+     * @return ResponseEntity containing the added RoomDTO with HTTP status CREATED.
+     */
+    @PostMapping
+    public ResponseEntity<RoomDTO> addRoom(@Valid @RequestBody RoomDTO roomDTO) {
+        RoomDTO createdRoom = roomService.createRoom(roomDTO);
+        return new ResponseEntity<>(createdRoom, HttpStatus.CREATED);
+    }
 
 
 }
