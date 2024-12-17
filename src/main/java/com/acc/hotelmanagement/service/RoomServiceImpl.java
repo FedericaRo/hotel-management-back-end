@@ -1,10 +1,13 @@
 package com.acc.hotelmanagement.service;
 
 import com.acc.hotelmanagement.dto.RoomDTO;
+import com.acc.hotelmanagement.dto.RoomFilterDTO;
 import com.acc.hotelmanagement.mapper.service_mapper.RoomMapperService;
 import com.acc.hotelmanagement.model.Room;
 import com.acc.hotelmanagement.repository.RoomRepository;
+import com.acc.hotelmanagement.specification.RoomSpecification;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,11 +46,22 @@ public class RoomServiceImpl implements RoomService {
     }
 
 
-    //Creates a new room
+    // Creates a new room
     @Override
     public RoomDTO createRoom(RoomDTO roomDTO) {
         Room newRoom = roomMapperService.toEntity(roomDTO);
         return roomMapperService.toDTO(roomRepository.save(newRoom));
+    }
+
+    // Retrieves all rooms that match the specified filter criteria
+    public List<RoomDTO> getFilteredRooms(RoomFilterDTO filterDTO)
+    {
+        Specification<Room> spec = Specification
+                .where(RoomSpecification.withNumberOfGuests(filterDTO.getNumberOfGuests()))
+                .and(RoomSpecification.withRoomType(filterDTO.getType()))
+                .and(RoomSpecification.isAvailableBetween(filterDTO.getCheckInDate(), filterDTO.getCheckOutDate()));
+
+        return roomMapperService.toDTO(roomRepository.findAll(spec));
     }
 
     /*@Override

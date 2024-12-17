@@ -1,6 +1,7 @@
 package com.acc.hotelmanagement.controller;
 
 import com.acc.hotelmanagement.dto.RoomDTO;
+import com.acc.hotelmanagement.dto.RoomFilterDTO;
 import com.acc.hotelmanagement.service.RoomService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 
 @RestController
 @RequestMapping("/rooms")
@@ -53,6 +55,18 @@ public class RoomController {
     public ResponseEntity<RoomDTO> addRoom(@Valid @RequestBody RoomDTO roomDTO) {
         RoomDTO createdRoom = roomService.createRoom(roomDTO);
         return new ResponseEntity<>(createdRoom, HttpStatus.CREATED);
+    }
+
+    /**
+     * Retrieves rooms based on provided filters
+     *
+     * @param roomFilterDTO The filterDTO containing the filters and their values
+     * @return ResponseEntity containing a list of RoomDTOs with HTTP status OK
+     */
+    @PostMapping("/filtered")
+    public ResponseEntity<List<RoomDTO>> getRoomsWithFilters(@RequestBody RoomFilterDTO roomFilterDTO) {
+        List<RoomDTO> roomDTOs = roomService.getFilteredRooms(roomFilterDTO);
+        return new ResponseEntity<>(roomDTOs, HttpStatus.OK);
     }
 
 
