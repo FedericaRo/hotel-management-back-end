@@ -34,10 +34,15 @@ Il sistema di gestione hotel è un'applicazione progettata per gestire le prenot
 
 - **Assegnazione di un parcheggio:**
   - Trova il primo posto auto disponibile e lo assegna a una prenotazione già esistente.
-  - Ogni parcheggio ha un proprio codice (A1, A2, A3, A4, B1, B2, B3, B4) da dare al cliente
+  - Ogni parcheggio ha un proprio codice (A1, A2, A3, A4, B1, B2, B3, B4) da dare al cliente.
 - **Rimozione di un parcheggio:**
   - Libera un parcheggio precedentemente assegnato.
+ 
+### 2.4 Ricerca camere disponibili in base a criteri dinamici
 
+- Aggiunta una funzionalità per filtrare le camere in modo dinamico basato su criteri specifici forniti dall'utente.
+- Utilizzo delle Spring Data JPA Specifications per costruire query.
+- Filtro per numero di ospiti, tipo di camera e/o disponibilità in date specifiche.
 ---
 
 ## 3. Flusso del programma
@@ -81,14 +86,14 @@ Ci sono 10 stanze e 8 posto auto da associare o meno alle prenotazioni.
 
 ### 5.1 Tabelle principali
 
-- **`rooms`****:**
+- **`rooms`**:
 
   - `id`: Identificativo univoco della camera.
   - `type`: Tipo di camera (es. CLASSIC, SUITE, MODERN, BASIC).
   - `number_of_guests`: Numero massimo di ospiti.
   - `price`: Prezzo della camera.
 
-- **`bookings`****:**
+- **`bookings`**:
 
   - `id`: Identificativo univoco della prenotazione.
   - `room_id`: Identificativo della camera associata.
@@ -97,7 +102,7 @@ Ci sono 10 stanze e 8 posto auto da associare o meno alle prenotazioni.
   - `number_of_guests`: Numero di ospiti.
   - `parking_space_id`: Identificativo del parcheggio associato
 
-- **`parking_spaces`****:**
+- **`parking_spaces`**:
 
   - `id`: Identificativo univoco del parcheggio.
   - `code`: Identificativo del pacheggio per il cliente.
@@ -131,7 +136,18 @@ Racchiude informazioni sulla prenotazione, la stanza associata e il parcheggio
     "roomId": 1,
     "parkingCode": "A1",
     "reservedParking": true
-  },
+  }
+```
+### 6.3 `RoomFilterDTO` 
+Filtro per ricercare camere dinamicamente
+
+```json
+{
+    "checkInDate": "2024-12-12",
+    "checkOutDate": "2024-12-13",
+    "numberOfGuests": 4,
+    "roomType": "SUITE",
+  }
 ```
 
 ---
